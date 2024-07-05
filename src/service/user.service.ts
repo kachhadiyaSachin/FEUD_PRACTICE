@@ -14,11 +14,7 @@ export class userService {
   async login(req: Request, res: Response) {
     const { countrycode, phonenumber } = req.body;
     const PhoneNumber = countrycode + phonenumber;
-    
     try {
-      if (!countrycode || !phonenumber) {
-        return res.status(400).json({ message: "please fill all fialds" });
-      }
       const OTP_NUMBER = Math.floor(Math.random() * (9999 - 1000) + 1000).toString();
       const OTPbcryptpass = await bcrypt.hash(OTP_NUMBER, 10);
 

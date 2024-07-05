@@ -9,7 +9,7 @@ const router = Router();
 const { userExample } = controllers;
 
 router.post(END_POINT.LOGIN, validate(userValidation.login) ,userExample.loginVerify);
-router.post(END_POINT.OTP, userExample.OTPVerify);
+router.post(END_POINT.OTP, validate(userValidation.OTPcompare), userExample.OTPVerify);
 router.post(END_POINT.RESENDOTP, userExample.OTPresend);
 router.post(END_POINT.SIGNUP, userExample.Signup);
 router.post(END_POINT.EMAILOTP, userExample.EMAILOTPVerify);
