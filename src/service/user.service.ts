@@ -130,9 +130,6 @@ export class userService {
       if(user.phoneVerify === false){
         return res.status(400).json({ message: "User phonenumber is not verified" });
       }
-      if(!first_name || !last_name || !email || !dob){
-        return res.status(400).json({ message: "please fill all fields" });
-      }
       if(email === user.email){
         return res.status(400).json({ message: "Email is already exist" });
       }
@@ -325,9 +322,6 @@ export class userService {
     const { greenBADGE } = req.body;
     const uId = req.uId;
     try {
-      if(!greenBADGE.verifiedSM || !greenBADGE.featureinVIDEO){
-        return res.status(400).json({ message: "All fields are required" });
-      }
       let user: any = await User.findOne({ _id: uId });
       if (!user) {
         return res.status(400).json({ message: "User is not found" });
@@ -359,12 +353,6 @@ export class userService {
     const { blueBADGE } = req.body;
     const uId = req.uId;
     try {
-      if(!blueBADGE.feudMedialink[0] || !blueBADGE.feudMedialink[1]){
-        return res.status(400).json({ message: "All fields are required" });
-      }
-      if(!blueBADGE.feudMedialink[2] && !blueBADGE.verifiedSMLink[0]){
-        return res.status(400).json({ message: "One fields is required" });
-      }
       let user: any = await User.findOne({ _id: uId });
       if (!user) {
         return res.status(400).json({ message: "User is not found" });
@@ -395,9 +383,6 @@ export class userService {
     const { profilepic, username, gender, country, state, city, bio } = req.body;
     const uId = req.uId;
     try {
-      if (!username ||!gender || !country || !state ||!city ||!bio) {
-        return res.status(400).json({ message: "All fields are required" });
-      }
       let user: any = await User.findOne({ _id: uId });
       if (!user) {
         return res.status(400).json({ message: "User is not found" });
@@ -471,6 +456,9 @@ export class userService {
       let user: any = await User.findOne({ _id: uId });
       if (!user) {
         return res.status(400).json({ message: "User is not exists" });
+      }
+      if(user.username === username){
+        return res.status(400).json({ message: "Username already exists" });
       }
       if(username.length <= 4){
         user.isUsername = true;
