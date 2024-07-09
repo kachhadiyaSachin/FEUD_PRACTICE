@@ -27,7 +27,7 @@ export class feudService {
       }
       if(JoinFeud[0] === 4 || JoinFeud.length > 3){
         if(individual.length < 1 || individual == undefined){
-          return res.status(400).json({ message: "Individual invite should not be empty" });
+          return res.status(400).json({ message: "Individual invite should not be empty!" });
         }
       }
       if(inviteModerator.length < 1 || inviteModerator == undefined){
