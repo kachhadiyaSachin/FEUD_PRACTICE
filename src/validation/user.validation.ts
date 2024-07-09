@@ -49,7 +49,7 @@ export default {
     userProfile: {
         body: Joi.object({
             username: Joi.string().required(),
-            profilepic: Joi.string().optional(),
+            profilepic: Joi.string().allow("").optional(),
             gender: Joi.string().required(),
             country: Joi.string().required(),
             state: Joi.string().required(),

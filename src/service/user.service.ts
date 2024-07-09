@@ -7,7 +7,6 @@ import { otpSEND } from "../helper/otpSend.helper";
 import { sendEMAIL } from "../helper/emailSend.helper";
 import { CustomRequest } from "../interface/user.interface";
 import dotenv from 'dotenv';
-import { Message } from "twilio/lib/twiml/MessagingResponse";
 dotenv.config();
 
 export class userService {
