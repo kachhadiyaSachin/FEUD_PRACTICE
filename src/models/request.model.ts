@@ -9,5 +9,5 @@ const feuduserRequestSchema = new Schema<IFeuduserRequest>({
     versionKey: false
 });
 
-const feudUserRequest = mongoose.model<IFeuduserRequest>("FeudUserRequest", feuduserRequestSchema);
+const feudUserRequest = mongoose.model<IFeuduserRequest>("UserRequest", feuduserRequestSchema);
 export default feudUserRequest;

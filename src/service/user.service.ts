@@ -57,7 +57,6 @@ export class userService {
       if (!OTPmatch) {
         return res.status(400).json({ message: "OTP is incorrect" });
       }
-
       const currentDate = new Date().getTime();
       const OTPtimestamp = phoneOTPfind.phoneOTPtimestamp;
       if (currentDate - OTPtimestamp >= 60000) {

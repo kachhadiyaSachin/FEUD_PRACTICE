@@ -6,8 +6,8 @@ const UserSchema: Schema = new Schema<IUser>({
     _id: { type: ObjectId, auto: true },
     email: { type: String, default: ""},
     phonenumber: { type: String, unique: false, required: true },
-    phoneOTP: {type: String, default: 123456},
-    emailOTP: {type: String, default: 123456},
+    phoneOTP: {type: String, default: 1234},
+    emailOTP: {type: String, default: 1234},
     phoneOTPtimestamp: {type: Date},
     emailOTPtimestamp: {type: Date},
     first_name: {type: String, default: ""},
@@ -29,7 +29,7 @@ const UserSchema: Schema = new Schema<IUser>({
     is2FA: {type: Boolean, default: false},
     is2FAverify: {type: Boolean, default: false},
     isQA: {type: Boolean, default: false},
-    otp2FA: {type: String, default: 123456},
+    otp2FA: {type: String, default: 1234},
     OTP2FAtimestamp: {type: Date},
     securityQA : [{
         question: {type: String},
@@ -53,6 +53,6 @@ const UserSchema: Schema = new Schema<IUser>({
     versionKey: false
 });
 
-const User = mongoose.model<IUser>('feuduser', UserSchema);
+const User = mongoose.model<IUser>('User', UserSchema);
 
 export default User;

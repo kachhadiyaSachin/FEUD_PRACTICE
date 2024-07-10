@@ -28,3 +28,18 @@ export interface IFeuds extends Document {
         String
     ]
 }
+
+export interface IFeudsNofification extends Document {
+    userId: Types.ObjectId | string;
+    profilePic: string;
+    badge: Number;
+    message: String;
+    title: String;
+};
+
+
+export interface IFeudsOptioncount extends Document {
+    feudId: Types.ObjectId | string;
+    optionId: Types.ObjectId | string;
+    optionCount: [ String ];
+};

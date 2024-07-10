@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
+import { IFeudsOptioncount } from "../interface/createFeuds.interface";
 
-const feuduserRequestSchema = new Schema({
+const feuduserRequestSchema = new Schema<IFeudsOptioncount>({
     feudId: { type: Schema.Types.ObjectId, ref: "feuds" },
     optionId: { type: Schema.Types.ObjectId, ref: "FeudsQA" },
     optionCount: [{type: String, default: []}]
@@ -8,7 +9,7 @@ const feuduserRequestSchema = new Schema({
     versionKey: false
 });
 
-const Feudsoptionscount = mongoose.model("FeudsOptionscount", feuduserRequestSchema);
+const Feudsoptionscount = mongoose.model<IFeudsOptioncount>("OptionCount", feuduserRequestSchema);
 export default Feudsoptionscount;
 
 
