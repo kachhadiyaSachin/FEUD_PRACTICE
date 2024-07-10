@@ -4,6 +4,10 @@ import { IFeuds } from "../interface/createFeuds.interface";
 const feuduserRequestSchema = new Schema<IFeuds>({
     userId: { type: Schema.Types.ObjectId, ref: "feuduser" },
     title: { type: String },
+    pollquestion: { type: String},
+    options: [{
+        option: { type: String },
+    }],
     rules: [{
         ruleCheck: { type: Boolean },
         rule: { type: String },

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CustomRequest } from "../interface/user.interface";
 import User from "../models/user.model";
 import feuds from "../models/feuds.model";
-import feudsQA from "../models/feudsQA.model";
+import feudsOptionscount from "../models/feudsOptionscount.model";
 import feudsNotification from "../models/createfeudmessage.model";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -12,10 +12,10 @@ export class feudService {
     const { title, pollquestion, options, rules, feudNow, feudLater, FeudDate, FeudTime, JoinFeud, individual, externalEmail, phoneNumber ,inviteModerator} = req.body;
     try {
       let user: any = await User.findOne({ _id: req.uId });
+      let feudUser: any = await feuds.findOne({userId: req.uId});
       if (!user) {
         return res.status(400).json({ message: "User is not exists" });
       }
-      let feudUser: any = await feuds.findOne({userId: req.uId});
       if(rules.length > 3){
         return res.status(400).json({ message: "Rules should not exceed 3" });
       }
@@ -30,12 +30,17 @@ export class feudService {
           return res.status(400).json({ message: "Individual invite should not be empty!" });
         }
       }
+      if(externalEmail.length < 0 && phoneNumber.length < 0){
+        return res.status(400).json({ message: "External email or phone number should not be empty" });
+      }
       if(inviteModerator.length < 1 || inviteModerator == undefined){
         return res.status(400).json({ message: "Invite moderator should not be empty" });
       }
       feudUser = await feuds.create({
         userId: req.uId,
         title: title,
+        pollquestion: pollquestion,
+        options: options,
         rules: rules,
         feudNow: feudNow,
         feudLater: feudLater,
@@ -50,11 +55,14 @@ export class feudService {
         feudUser.phoneNumber = phoneNumber;
         await feudUser.save();
       }
-      const feudUserQA = await feudsQA.create({
-        feudId: feudUser._id,
-        pollquestion: pollquestion,
-        options: options
-      });
+
+      for (let index = 0; index < feudUser.options.length; index++) {
+        await feudsOptionscount.create({
+          feudId: feudUser._id,
+          optionId: feudUser.options[index]._id,
+        });
+      }
+
       const feudsmessage = await feudsNotification.create({
         userId: feudUser._id,
         profilePic: user.profilepic,
@@ -62,7 +70,8 @@ export class feudService {
         message: `${user.first_name} ${user.last_name} Invited you to Moderate a Feud`,
         title: feudUser.title,
       });
-      return res.status(200).json({ message: "Feud created successfully!!!" });
+
+      return res.status(200).json({ status: true, message: "Feud created successfully!!!" });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ status: false, message: "Internal server error!!" });

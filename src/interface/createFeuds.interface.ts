@@ -4,6 +4,10 @@ export interface IFeuds extends Document {
     _id: Schema.Types.ObjectId,
     userId: Types.ObjectId | string;
     title: String,
+    pollquestion: String,
+    options: [{
+        option: String,
+    }],
     rules : [{
         ruleCheck: boolean,
         rule: String,
