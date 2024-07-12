@@ -2,7 +2,7 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 import { IFeuds } from "../interface/createFeuds.interface";
 
 const feuduserRequestSchema = new Schema<IFeuds>({
-    userId: { type: Schema.Types.ObjectId, ref: "feuduser" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String },
     pollquestion: { type: String},
     options: [{
@@ -20,8 +20,6 @@ const feuduserRequestSchema = new Schema<IFeuds>({
         { type: Number, default: 0 }
     ],
     individual: [{type:String}],
-    externalEmail: [{type: String, default: ""}],
-    phoneNumber: [{type: String, default: ""}],
     inviteModerator: [{type:String, default: []}]
 }, {
     versionKey: false

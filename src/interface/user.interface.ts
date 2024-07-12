@@ -57,8 +57,3 @@ export interface CustomRequest extends Request{
 }
 
 
-export interface IFeuduserRequest extends Document {
-    userId: Types.ObjectId | string;
-    status: number;
-    requestType: number;
-};

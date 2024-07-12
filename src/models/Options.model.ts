@@ -1,9 +1,14 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import { IFeudsOptioncount } from "../interface/createFeuds.interface";
+
+export interface IFeudsOptioncount extends Document {
+    feudId: Types.ObjectId | string;
+    optionId: Types.ObjectId | string;
+    optionCount: [ String ];
+};
 
 const feuduserRequestSchema = new Schema<IFeudsOptioncount>({
-    feudId: { type: Schema.Types.ObjectId, ref: "feuds" },
-    optionId: { type: Schema.Types.ObjectId, ref: "FeudsQA" },
+    feudId: { type: Schema.Types.ObjectId, ref: "Feuds" },
+    optionId: { type: Schema.Types.ObjectId, ref: "Feuds" },
     optionCount: [{type: String, default: []}]
 }, {
     versionKey: false

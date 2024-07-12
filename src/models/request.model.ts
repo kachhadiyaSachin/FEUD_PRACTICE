@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import { IFeuduserRequest } from "../interface/user.interface";
+
+export interface IFeuduserRequest extends Document {
+    userId: Types.ObjectId | string;
+    status: number;
+    requestType: number;
+};
 
 const feuduserRequestSchema = new Schema<IFeuduserRequest>({
     userId: { type: Schema.Types.ObjectId, ref: "feuduser" },

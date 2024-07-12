@@ -14,5 +14,14 @@ export class feudsExample extends feudService {
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
+
+  public async myFeudsVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.myFeud(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
 }
 

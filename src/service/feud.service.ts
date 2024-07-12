@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { CustomRequest } from "../interface/user.interface";
+import ObjectId from 'mongodb';
 import User from "../models/user.model";
 import feuds from "../models/feuds.model";
-import feudsOptionscount from "../models/feudsOptionscount.model";
-import feudsNotification from "../models/createfeudmessage.model";
+import feudsOptionscount from "../models/Options.model";
+import feudsNotification from "../models/notification.model";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,26 +17,12 @@ export class feudService {
       if (!user) {
         return res.status(400).json({ message: "User is not exists" });
       }
-      if(rules.length > 3){
-        return res.status(400).json({ message: "Rules should not exceed 3" });
-      }
-      if(options.length < 2){
-        return res.status(400).json({ message: "Options should be atlease 2" });
-      }
-      if(JoinFeud.length > 4){
-        return res.status(400).json({ message: "Join Feud should not exceed 4" });
-      }
-      if(JoinFeud[0] === 4 || JoinFeud.length > 3){
-        if(individual.length < 1 || individual == undefined){
+      if(JoinFeud.includes(4)){
+        if(individual.length === 0){
           return res.status(400).json({ message: "Individual invite should not be empty!" });
         }
       }
-      if(externalEmail.length < 0 && phoneNumber.length < 0){
-        return res.status(400).json({ message: "External email or phone number should not be empty" });
-      }
-      if(inviteModerator.length < 1 || inviteModerator == undefined){
-        return res.status(400).json({ message: "Invite moderator should not be empty" });
-      }
+      
       feudUser = await feuds.create({
         userId: req.uId,
         title: title,
@@ -49,10 +36,10 @@ export class feudService {
         JoinFeud: JoinFeud,
         inviteModerator: inviteModerator
       });
-      if(JoinFeud[0] === 4 || JoinFeud.length > 3){
+      if(JoinFeud.includes(4)){
         feudUser.individual = individual;
-        feudUser.externalEmail = externalEmail;
-        feudUser.phoneNumber = phoneNumber;
+        // feudUser.externalEmail = externalEmail;
+        // feudUser.phoneNumber = phoneNumber;
         await feudUser.save();
       }
 
@@ -73,6 +60,72 @@ export class feudService {
 
       return res.status(200).json({ status: true, message: "Feud created successfully!!!" });
     } catch (err) {
+      console.log(err);
+      return res.status(500).json({ status: false, message: "Internal server error!!" });
+    }
+  }
+
+
+  async myFeud(req: CustomRequest, res:Response) {
+    try{
+      let feudUser: any = await feuds.find({userId: req.uId});
+      if(!feudUser){
+        return res.status(400).json({ message: "No feuds found" });
+      }
+      
+      let user: any = await User.find({ _id: req.uId}).select("first_name last_name profilepic badge");
+      if(!user){
+        return res.status(400).json({ message: "User is not exists" });
+      }
+
+      let feudmodeIds = feudUser.map((x: any) => x.inviteModerator).flat();
+      let objectIds = feudmodeIds.map((id: string) => {
+        new ObjectId(id)
+      });
+
+
+      // let feudmode = feudUser.map((x: any) => {
+      //   return x.inviteModerator;
+      // });
+
+      let users: any = await User.find({ _id: { $in: objectIds } }).select("first_name last_name profilepic badge");
+      //let users: any = await User.find({ _id: {$all: feudmode}}).select("first_name last_name profilepic badge");
+      if(!users){
+        return res.status(400).json({ message: "User is not exists" });
+      }
+      console.log(users);
+      
+
+      let feudmode = users.map((x: any) => {
+        let moderator = {
+          profilePic: x.profilepic,
+          badge: x.badge,
+          name: x.first_name + x.last_name
+        };
+        return moderator;
+      });
+      
+      let moderators: any = []
+      moderators.push(feudmode);
+      console.log(moderators);
+      
+
+      let feudDatas = feudUser.map((x: any) => {
+        let ids = x.inviteModerator;
+        
+        return {
+            feudId: x._id,
+            profilePic: user[0].profilepic,
+            badge: user[0].badge,
+            message: user[0].first_name + user[0].last_name + " Created a Feud",
+            title: x.title,
+            moderator: moderators
+        };
+      }); 
+    
+      return res.status(200).json({ status: true, message: "Feuds fetched successfully!!!", data: feudDatas});
+    }
+    catch(err){
       console.log(err);
       return res.status(500).json({ status: false, message: "Internal server error!!" });
     }
