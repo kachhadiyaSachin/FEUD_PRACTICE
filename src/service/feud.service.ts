@@ -23,6 +23,18 @@ export class feudService {
         if(individual.length === 0){
           return res.status(400).json({ message: "Individual invite should not be empty!" });
         }
+        // const sendSms = phoneNumber.map((y:any) => {
+        //   return otpSEND(y, `${user.first_name} ${user.last_name} invited you to join feud!!`);
+        // })
+        // const sendEmail = externalEmail.map((z:any) => {
+        //   sendEMAIL(
+        //     z,
+        //     "Hello",
+        //     "Invite to join feud",
+        //     `${user.first_name} ${user.last_name} invited you to join feud!!`
+        //   );
+        //   return sendEMAIL;
+        // })
       }
       const check = inviteModerator.map((x:any) => {
         if(x === user.id){
@@ -33,19 +45,6 @@ export class feudService {
       if(check === true){
         return res.status(400).json({ message: "You cannot invite yourself as a moderator!" });
       }
-
-      const sendSms = phoneNumber.map((y:any) => {
-        return otpSEND(y, `${user.first_name} ${user.last_name} invited you to join feud!!`);
-      })
-      const sendEmail = externalEmail.map((z:any) => {
-        sendEMAIL(
-          z,
-          "Hello",
-          "Invite to join feud",
-          `${user.first_name} ${user.last_name} invited you to join feud!!`
-        );
-        return sendEMAIL;
-      })
     
       feudUser = await feuds.create({
         userId: req.uId,
@@ -72,13 +71,15 @@ export class feudService {
         });
       }
 
-      const feudsmessage = await feudsNotification.create({
-        userId: feudUser._id,
-        profilePic: user.profilepic,
-        badge: user.badge,
-        message: `${user.first_name} ${user.last_name} Invited you to Moderate a Feud`,
-        title: feudUser.title,
+      inviteModerator.map((x:any) => {
+        feudsNotification.create({
+          userId: user._id,
+          feudId: feudUser._id,
+          message: `${user.first_name} ${user.last_name} Invited you to Moderate a Feud`,
+          rcvId: new ObjectId(`${x}`)
+        });
       });
+      
 
       return res.status(200).json({ status: true, message: "Feud created successfully!!!" });
     } catch (err) {
@@ -146,4 +147,65 @@ export class feudService {
       return res.status(500).json({ status: false, message: "Internal server error!!" });
     }
   }
+
+
+  async getNotification(req: CustomRequest, res: Response) {
+    const { page = 1, limit = 10 } = req.body;
+    try {
+      const skip = (Number(page) - 1) * Number(limit);
+
+      const [Notification, totalNotification] = await Promise.all([
+        feudsNotification.find({rcvId: req.uId})
+          .select("message")
+          .skip(skip)
+          .limit(Number(limit))
+          .sort({ _id: -1 })
+          .populate({
+            path: "userId",
+            select: "first_name last_name profilepic badge",
+            model: "User",
+          })
+          .populate({
+            path: "feudId",
+            select: "title",
+            model: "Feuds"
+          })
+          .lean()
+          .exec(),
+          feudsNotification.find({rcvId: req.uId}).countDocuments().exec()
+      ]);
+  
+      if (Notification.length === 0) {
+        return res.status(400).json({status: false, message: "No feuds found", data: {
+          Notification: [],
+          paginationData: {
+            totalCount: 0,
+            currentPage: Number(page),
+            totalPages: 0,
+            limit: Number(limit)
+          }
+        }})
+      };
+
+      const totalPages = Math.ceil(totalNotification / Number(limit));
+  
+      return res.status(200).json({
+        status: true,
+        message: "Notifications fetched successfully!!!",
+        data: {
+          Notification,
+          paginationData: {
+            totalCount: totalNotification,
+            currentPage: Number(page),
+            totalPages,
+            limit: Number(limit)
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ status: false, message: "Internal server error!!" });
+    }
+  }
+
 }

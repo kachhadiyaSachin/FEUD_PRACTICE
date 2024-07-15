@@ -14,7 +14,7 @@ const UserSchema: Schema = new Schema<IUser>({
     last_name: {type: String, default: ""},
     dob: { type: String, default: ""},
     username: {type: String},
-    profilepic: {type: String, default: ""},
+    profilepic: {type: String, default: "https://www-feudr-bucket.s3.amazonaws.com/feudr-pub/1720520346753.vltgq4.addcfad0-f840-4bc3-9a03-5f45e836d750.png_/original"},
     isActive: {type: Boolean, default: true},
     badge: {type: Number, default: 1},
     gender: { type: String},

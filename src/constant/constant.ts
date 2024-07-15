@@ -20,5 +20,6 @@ export enum END_POINT {
     USERNAMESUGGESTION='/usernamesuggestion',
 
     CREATEFEUD='/createfeud',
-    MYFEUDS='/myfeud'
+    MYFEUDS='/myfeud',
+    NOTIFICATION='/notification',
   }

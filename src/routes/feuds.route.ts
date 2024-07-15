@@ -10,5 +10,6 @@ const { feudsExample } = controllers;
 
 router.post(END_POINT.CREATEFEUD, Verifytoken,feudsExample.feudsVerify);
 router.get(END_POINT.MYFEUDS, Verifytoken,feudsExample.myFeudsVerify);
+router.get(END_POINT.NOTIFICATION, Verifytoken, feudsExample.NotificationVerify)
 
 export default router;
