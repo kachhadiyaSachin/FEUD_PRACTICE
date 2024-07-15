@@ -358,14 +358,15 @@ export class userService {
       if (user.badge === 4) {
         return res.status(400).json({ message: "You already have blue badge" });
       }
-      let userReq = await feudUserRequest.findOne({requestType: 2});
+      let userReq = await feudUserRequest.findOne({userId: uId});
       if(!userReq){
-        userReq = await feudUserRequest.create({
-          userId: uId,
-          status: 1,
-          requestType: 2
-        });
+        return res.status(400).json({ message: "UserRequest is not found" });
       }
+      userReq = await feudUserRequest.create({
+        userId: uId,
+        status: 1,
+        requestType: 2
+      });
       user.blueBADGE = req.body.blueBADGE;
       user.badge = 4;
       await user.save();
