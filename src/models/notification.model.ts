@@ -6,6 +6,8 @@ export interface IFeudsNofification extends Document {
     message: string
     description :string;
     title:string;
+    subject: string,
+    role: Number,
     type:string;
     isRead:boolean;
     feudId:Types.ObjectId | string;
@@ -13,12 +15,14 @@ export interface IFeudsNofification extends Document {
     isAccept:boolean
 };
 
-const feuduserRequestSchema = new Schema<IFeudsNofification>({
+const UserRequestSchema = new Schema<IFeudsNofification>({
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     rcvId: { type: Schema.Types.ObjectId, ref: "User" }, // receiver user's id
     message: {type: String},
     description: {type: String},
     title: {type: String},
+    subject: {type: String},
+    role: {type: Number}, //0 is for User, 1 for admin
     type: {type: String},
     isRead :{type:Boolean, default:false},
     feudId :{ type: Schema.Types.ObjectId, ref: "Feuds" },
@@ -29,8 +33,8 @@ const feuduserRequestSchema = new Schema<IFeudsNofification>({
     versionKey: false, timestamps:true
 });
 
-const feudsNotification = mongoose.model<IFeudsNofification>("Notification", feuduserRequestSchema);
-export default feudsNotification;
+const Notification = mongoose.model<IFeudsNofification>("Notification", UserRequestSchema);
+export default Notification;
 
 
 

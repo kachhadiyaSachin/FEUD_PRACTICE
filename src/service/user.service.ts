@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
-import feudUserRequest from "../models/request.model";
+import UserRequest from "../models/request.model";
+import settings from "../models/setting.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { otpSEND } from "../helper/otpSend.helper";
@@ -28,6 +29,9 @@ export class userService {
             phoneOTP: OTPbcryptpass,
             phoneOTPtimestamp: Date.now(),
             isActive: true,
+        });
+        let setting = await settings.create({
+          userId: user._id
         });
         return res.status(200).json({ message: "Your account has been created successfully!!!" });
       } else {
@@ -327,9 +331,9 @@ export class userService {
       if (user.badge === 3) {
         return res.status(400).json({ message: "You already have green badge" });
       }
-      let userReq = await feudUserRequest.findOne({userId: uId});
+      let userReq = await UserRequest.findOne({userId: uId});
       if(!userReq){
-        userReq = await feudUserRequest.create({
+        userReq = await UserRequest.create({
           userId: uId,
           status: 1,
           requestType: 1
@@ -358,11 +362,11 @@ export class userService {
       if (user.badge === 4) {
         return res.status(400).json({ message: "You already have blue badge" });
       }
-      let userReq = await feudUserRequest.findOne({userId: uId});
+      let userReq = await UserRequest.findOne({userId: uId});
       if(!userReq){
         return res.status(400).json({ message: "UserRequest is not found" });
       }
-      userReq = await feudUserRequest.create({
+      userReq = await UserRequest.create({
         userId: uId,
         status: 1,
         requestType: 2

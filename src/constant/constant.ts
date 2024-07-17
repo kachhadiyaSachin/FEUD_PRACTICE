@@ -22,4 +22,5 @@ export enum END_POINT {
     CREATEFEUD='/createfeud',
     MYFEUDS='/myfeud',
     NOTIFICATION='/notification',
+    VOTECOUNT='/votecount'
   }

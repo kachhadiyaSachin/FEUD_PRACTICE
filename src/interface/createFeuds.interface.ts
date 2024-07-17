@@ -24,5 +24,6 @@ export interface IFeuds extends Document {
     ],
     inviteModerator: [
         String
-    ]
+    ],
+    totalUser: Number
 }

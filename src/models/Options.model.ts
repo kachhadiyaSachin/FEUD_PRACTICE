@@ -2,20 +2,24 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IFeudsOptioncount extends Document {
     feudId: Types.ObjectId | string;
+    optionName: string;
     optionId: Types.ObjectId | string;
     optionCount: [ String ];
+    voteCount: Number;
 };
 
-const feuduserRequestSchema = new Schema<IFeudsOptioncount>({
+const UserRequestSchema = new Schema<IFeudsOptioncount>({
     feudId: { type: Schema.Types.ObjectId, ref: "Feuds" },
+    optionName: {type: String},
     optionId: { type: Schema.Types.ObjectId, ref: "Feuds" },
-    optionCount: [{type: String, default: []}]
+    optionCount: [{type: String, default: []}],
+    voteCount: {type: Number, default: 0}
 }, {
     versionKey: false
 });
 
-const Feudsoptionscount = mongoose.model<IFeudsOptioncount>("OptionCount", feuduserRequestSchema);
-export default Feudsoptionscount;
+const Optionscount = mongoose.model<IFeudsOptioncount>("OptionCount", UserRequestSchema);
+export default Optionscount;
 
 
 

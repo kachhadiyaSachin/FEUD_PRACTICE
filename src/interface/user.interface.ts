@@ -31,6 +31,10 @@ export interface IUser extends Document {
     isQA: Boolean,
     otp2FA: String,
     OTP2FAtimestamp: Date,
+    moderatorType: {
+        isModerator: boolean
+        ModeratorType: Number
+    },
     securityQA : [{
         question: String,
         answer: String,

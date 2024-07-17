@@ -9,7 +9,8 @@ const router = Router();
 const { feudsExample } = controllers;
 
 router.post(END_POINT.CREATEFEUD, Verifytoken,feudsExample.feudsVerify);
-router.get(END_POINT.MYFEUDS, Verifytoken,feudsExample.myFeudsVerify);
-router.get(END_POINT.NOTIFICATION, Verifytoken, feudsExample.NotificationVerify)
+router.get(END_POINT.MYFEUDS, Verifytoken,feudsExample.getAllFeudsVerify);
+router.get(END_POINT.NOTIFICATION, Verifytoken, feudsExample.NotificationVerify);
+router.get(END_POINT.VOTECOUNT, Verifytoken, feudsExample.voteCountVerify);
 
 export default router;
