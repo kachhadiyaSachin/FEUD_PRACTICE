@@ -8,7 +8,7 @@ export interface IFeudsOptioncount extends Document {
     voteCount: Number;
 };
 
-const UserRequestSchema = new Schema<IFeudsOptioncount>({
+const OptionSchema = new Schema<IFeudsOptioncount>({
     feudId: { type: Schema.Types.ObjectId, ref: "Feuds" },
     optionName: {type: String},
     optionId: { type: Schema.Types.ObjectId, ref: "Feuds" },
@@ -18,7 +18,7 @@ const UserRequestSchema = new Schema<IFeudsOptioncount>({
     versionKey: false
 });
 
-const Optionscount = mongoose.model<IFeudsOptioncount>("OptionCount", UserRequestSchema);
+const Optionscount = mongoose.model<IFeudsOptioncount>("OptionCount", OptionSchema);
 export default Optionscount;
 
 

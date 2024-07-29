@@ -15,7 +15,7 @@ export interface IFeudsNofification extends Document {
     isAccept:boolean
 };
 
-const UserRequestSchema = new Schema<IFeudsNofification>({
+const NotificationSchema = new Schema<IFeudsNofification>({
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     rcvId: { type: Schema.Types.ObjectId, ref: "User" }, // receiver user's id
     message: {type: String},
@@ -33,7 +33,7 @@ const UserRequestSchema = new Schema<IFeudsNofification>({
     versionKey: false, timestamps:true
 });
 
-const Notification = mongoose.model<IFeudsNofification>("Notification", UserRequestSchema);
+const Notification = mongoose.model<IFeudsNofification>("Notification", NotificationSchema);
 export default Notification;
 
 

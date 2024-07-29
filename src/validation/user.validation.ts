@@ -56,5 +56,12 @@ export default {
             city: Joi.string().required(),
             bio: Joi.string().required(),
         })
+    },
+    updateTicker: {
+        body: Joi.object({
+            ticker: Joi.string().required().min(0).max(120),
+            color: Joi.string().required(),
+            speed: Joi.number().required().min(0).max(60),
+        })
     }
 }

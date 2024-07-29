@@ -49,7 +49,12 @@ const UserSchema: Schema = new Schema<IUser>({
             { type: String , default:"" }
         ],
     },
-    },{
+    ticker : {
+        description: {type: String},
+        textColor: {type: String},
+        speed: {type: Number}
+    }
+},{
     versionKey: false
 });
 

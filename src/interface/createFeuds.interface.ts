@@ -16,14 +16,18 @@ export interface IFeuds extends Document {
     feudLater: boolean,
     FeudDate: String,
     FeudTime: String,
+    externalEmail: [
+        String
+    ],
+    phoneNumber: [
+        String
+    ],
     JoinFeud: [
         Number
     ],
     individual: [
         String
     ],
-    inviteModerator: [
-        String
-    ],
-    totalUser: Number
+    totalUser: Number,
+    status: Number
 }

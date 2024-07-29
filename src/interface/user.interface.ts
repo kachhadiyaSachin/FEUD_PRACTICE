@@ -31,10 +31,6 @@ export interface IUser extends Document {
     isQA: Boolean,
     otp2FA: String,
     OTP2FAtimestamp: Date,
-    moderatorType: {
-        isModerator: boolean
-        ModeratorType: Number
-    },
     securityQA : [{
         question: String,
         answer: String,
@@ -52,6 +48,11 @@ export interface IUser extends Document {
         verifiedSMLink: {
             VerifiedSMLink4: String,
         }
+    },
+    ticker : {
+        description: String,
+        textColor: String,
+        speed: Number
     }
 }
 

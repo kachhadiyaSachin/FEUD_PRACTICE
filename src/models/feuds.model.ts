@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import { IFeuds } from "../interface/createFeuds.interface";
 
-const UserRequestSchema = new Schema<IFeuds>({
+const FeudsSchema = new Schema<IFeuds>({
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String },
     pollquestion: { type: String},
@@ -16,15 +16,21 @@ const UserRequestSchema = new Schema<IFeuds>({
     feudLater: {type: Boolean, default: false},
     FeudDate: {type: String, require: true},
     FeudTime: {type: String, require: true},
+    externalEmail: [
+        {type: String}
+    ],
+    phoneNumber: [
+        {type: String}
+    ],
     JoinFeud: [
         { type: Number, default: 0 }
     ],
     individual: [{type:String}],
-    inviteModerator: [{type:String, default: []}],
-    totalUser: {type: Number, default:0}
+    totalUser: {type: Number, default:0},
+    status: {type: Number, default: 0, enum:[0,1,2,3]}
 }, {
     versionKey: false
 });
 
-const feuds = mongoose.model<IFeuds>("Feuds", UserRequestSchema);
+const feuds = mongoose.model<IFeuds>("Feuds", FeudsSchema);
 export default feuds;

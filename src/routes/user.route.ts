@@ -30,6 +30,7 @@ router.get(END_POINT.USERNAMESUGGESTION, Verifytoken, userExample.usernameSUGGES
 router.get(END_POINT.USERNAMEPURCHASE, Verifytoken, userExample.usernamePURCHASE);
 
 router.get(END_POINT.USER, Verifytoken, userExample.getuserProfile);
+router.post(END_POINT.UPDATETICKER, Verifytoken, validate(userValidation.updateTicker), userExample.updateTickerVerify)
 
 
 export default router;

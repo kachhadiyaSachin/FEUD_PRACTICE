@@ -491,4 +491,24 @@ export class userService {
       return res.status(500).json({ status: false, message: "Internal server error!!" });
     }
   }
+
+  async updateTicker(req: CustomRequest, res: Response) {
+    const {ticker, color, speed} = req.body
+    try {
+      let user:any = await User.findOne({_id: req.uId});
+      if(!user){
+        return res.status(400).json({status:false, message:"User is not exist!!"});
+      }
+
+      user.ticker.description = ticker;
+      user.ticker.textColor = color;
+      user.ticker.speed = speed;
+      await user.save();
+
+      return res.status(200).json({ status: true, message: "Ticker updated successfully!!"});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, message: "Internal server error." });
+    }
+  }
 }

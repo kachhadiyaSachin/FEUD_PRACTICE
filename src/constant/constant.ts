@@ -18,9 +18,20 @@ export enum END_POINT {
     USERNAMECHECK='/usernamecheck',
     USERNAMEPURCHASE='/usernamepurchase',
     USERNAMESUGGESTION='/usernamesuggestion',
+    UPDATETICKER='/updateticker',
 
     CREATEFEUD='/createfeud',
     MYFEUDS='/myfeud',
     NOTIFICATION='/notification',
-    VOTECOUNT='/votecount'
+    ACCEPTNOTIFICATION='/acceptnotification',
+    GETVOTECOUNT='/getvotecount',
+    VOTECOUNT='/votecount',
+    JOINFEUD='/joinfeud',
+    EDITFEUD='/editfeud',
+    CANCELFEUD='/cancelfeud',
+    CANCELFEUDRESERVATION='/cancelfeudreservation',
+    HOSTFEUD='/hostfeud',
+    RENTBACKSKIN='/rentbackskin',
+    ITEMVISIBILITY='/itemvisibility',
+    JOINFEUDSDATA='/joinfeudsdata'
   }
