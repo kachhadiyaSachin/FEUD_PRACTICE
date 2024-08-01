@@ -1,7 +1,6 @@
 import { ObjectId } from 'mongodb';
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { IUser } from '../interface/user.interface';
-import { string } from 'joi';
 
 const UserSchema: Schema = new Schema<IUser>({
     _id: { type: ObjectId, auto: true },

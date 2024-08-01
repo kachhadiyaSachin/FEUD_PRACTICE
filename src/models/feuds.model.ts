@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IFeuds } from "../interface/createFeuds.interface";
 
 const FeudsSchema = new Schema<IFeuds>({

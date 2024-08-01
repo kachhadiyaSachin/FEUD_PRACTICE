@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IJoinFeuds } from "../interface/joinFeuds.interface";
 
 const JoinFeudSchema = new Schema<IJoinFeuds>({

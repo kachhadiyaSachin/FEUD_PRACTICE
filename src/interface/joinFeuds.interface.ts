@@ -1,4 +1,4 @@
-import { Document, Types, Model, Schema, ObjectId } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface IJoinFeuds extends Document {
     feudId: Schema.Types.ObjectId,

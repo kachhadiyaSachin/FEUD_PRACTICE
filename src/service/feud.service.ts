@@ -73,7 +73,7 @@ export class feudService {
         JoinFeud: JoinFeud,
         status: 0,
       });
-      const joinfeud: any = await Joinfeud.create({
+      await Joinfeud.create({
         feudId: feudUser._id,
         inviteModerator: inviteModerator,
         participant : [{

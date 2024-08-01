@@ -1,4 +1,4 @@
-import { Document, Types, Model, Schema, ObjectId } from 'mongoose';
+import { Document, Schema, ObjectId } from 'mongoose';
 import { JwtPayload } from 'jsonwebtoken';
 import { Request } from 'express';
 

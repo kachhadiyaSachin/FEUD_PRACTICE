@@ -1,4 +1,4 @@
-import { Document, Types, Model, Schema, ObjectId } from 'mongoose';
+import { Document, Types, Schema } from 'mongoose';
 
 export interface IFeuds extends Document {
     _id: Schema.Types.ObjectId,
