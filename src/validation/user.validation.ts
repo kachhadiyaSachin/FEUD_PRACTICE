@@ -42,7 +42,7 @@ export default {
         body: Joi.object({
             blueBADGE: {
                 feudMedialink: Joi.array().required(),
-                verifiedSMLink: Joi.array().required()
+                verifiedSMLink: Joi.string().required()
             }
         })
     },

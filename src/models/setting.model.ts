@@ -30,10 +30,10 @@ const UserSettingSchema = new Schema<IUserSetting>({
     },
     rentSkin : {
         rentprice : {type: Number},
-        categories : [{type: String, default: []}]
+        categories : [{type: String, default : [] }]
     },
     itemVisible : {
-        seeItem: { type: Number, default: 0, enum: [1,2,3,4,5,6] }, // 1 Everyone, 2 Only friends, 3 Only Fans, 4 Friends and fans, 5 No one, 6 Individual
+        seeItem: { type: Number, default: 0, enum: [0,1,2,3,4,5,6] }, // 1 Everyone, 2 Only friends, 3 Only Fans, 4 Friends and fans, 5 No one, 6 Individual
         individual: [{type:String}]
     }
 }, {

@@ -121,7 +121,6 @@ export class userService {
     }
   }
 
-
   async signup(req: Request, res: Response) {
     const { phonenumber, first_name, last_name, email, dob } = req.body;
     try {
@@ -204,7 +203,6 @@ export class userService {
     }
   }
 
-
   async ResendEMAILOTP(req: Request, res: Response) {
     const { email } = req.body;
     try {
@@ -230,7 +228,6 @@ export class userService {
       return res.status(500).json({ status: false, message: "Internal server error!!" });
     }
   }
-
 
   async UPGRADEbadge(req: CustomRequest, res: Response) {
     const { isSkip, is2FA, isQA, securityQA } = req.body;
@@ -498,6 +495,9 @@ export class userService {
       let user:any = await User.findOne({_id: req.uId});
       if(!user){
         return res.status(400).json({status:false, message:"User is not exist!!"});
+      }
+      if(user.badge === 1){
+        return res.status(400).json({ message: "You cannot update ticker upgrade your badge!!" });
       }
 
       user.ticker.description = ticker;

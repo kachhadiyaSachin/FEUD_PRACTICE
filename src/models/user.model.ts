@@ -1,13 +1,14 @@
 import { ObjectId } from 'mongodb';
 import mongoose, { Document, Schema } from 'mongoose';
 import { IUser } from '../interface/user.interface';
+import { string } from 'joi';
 
 const UserSchema: Schema = new Schema<IUser>({
     _id: { type: ObjectId, auto: true },
     email: { type: String, default: ""},
     phonenumber: { type: String, unique: false, required: true },
-    phoneOTP: {type: String, default: 1234},
-    emailOTP: {type: String, default: 1234},
+    phoneOTP: {type: String},
+    emailOTP: {type: String},
     phoneOTPtimestamp: {type: Date},
     emailOTPtimestamp: {type: Date},
     first_name: {type: String, default: ""},
@@ -29,7 +30,7 @@ const UserSchema: Schema = new Schema<IUser>({
     is2FA: {type: Boolean, default: false},
     is2FAverify: {type: Boolean, default: false},
     isQA: {type: Boolean, default: false},
-    otp2FA: {type: String, default: 1234},
+    otp2FA: { type: String },
     OTP2FAtimestamp: {type: Date},
     securityQA : [{
         question: {type: String},
@@ -41,13 +42,9 @@ const UserSchema: Schema = new Schema<IUser>({
     },
     blueBADGE: {
         feudMedialink: [
-            { type: String },
-            { type: String },
             { type: String , default:"" },
         ],
-        verifiedSMLink: [
-            { type: String , default:"" }
-        ],
+        verifiedSMLink: { type: String , default:"" },
     },
     ticker : {
         description: {type: String},

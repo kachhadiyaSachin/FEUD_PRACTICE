@@ -43,9 +43,9 @@ export class feudsExample extends feudService {
     }
   }
 
-  public async acceptNotificationVerify(req: Request, res: Response): Promise<void> {
+  public async acceptModeratorRequestVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.acceptNotification(req, res);
+      await super.acceptModeratorRequest(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
@@ -118,6 +118,42 @@ export class feudsExample extends feudService {
   public async itemVisibilityVerify(req: Request, res: Response): Promise<void> {
     try {
       await super.itemVisibility(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async kickOutModeratorRuleVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.kickOutModeratorRule(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async getKickoutCountVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.getKickoutCount(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async addKickoutVoteVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.addKickoutVote(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async endFeudResponseVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.endFeudResponse(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });

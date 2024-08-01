@@ -27,9 +27,10 @@ export interface IJoinFeuds extends Document {
         disagree: Schema.Types.ObjectId,
         muteAt: Date,
         muteEnd: Date,
+        status: Number
     },
-    removeModerator: [{
+    removeModerator: {
         removeModeratorUser: Schema.Types.ObjectId,
         removeAt: Date,
-    }]
+    },
 }

@@ -23,7 +23,7 @@ export enum END_POINT {
     CREATEFEUD='/createfeud',
     MYFEUDS='/myfeud',
     NOTIFICATION='/notification',
-    ACCEPTNOTIFICATION='/acceptnotification',
+    ACCEPTMODERATOR='/acceptmoderator',
     GETVOTECOUNT='/getvotecount',
     VOTECOUNT='/votecount',
     JOINFEUD='/joinfeud',
@@ -33,5 +33,9 @@ export enum END_POINT {
     HOSTFEUD='/hostfeud',
     RENTBACKSKIN='/rentbackskin',
     ITEMVISIBILITY='/itemvisibility',
-    JOINFEUDSDATA='/joinfeudsdata'
+    JOINFEUDSDATA='/joinfeudsdata',
+    KICKOUTMODERATORRULE='/kickoutmoderatorrule',
+    KICKOUTCOUNT='/kickoutcount',
+    KICKOUTVOTE='/kickoutvote',
+    ENDFEUDRESPONSE='/endfeudresponse'
   }

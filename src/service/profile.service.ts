@@ -13,6 +13,9 @@ export class profileService {
       if(!user){
         return res.status(400).json({status:false, message:"User is not exist!!"});
       }
+      if(user.badge <= 2){
+        return res.status(400).json({ message: "You cannot get data upgrade your badge!!" });
+      }
       let joinfeudHost:any = await Joinfeud.find({ 'participant': { $elemMatch: { 'participantUser': req.uId, 'joinType': 3 } } });
       let joinfeudparticipant:any = await Joinfeud.find({ 'participant': { $elemMatch: { 'participantUser': req.uId, 'joinType': 1 } } });
       let joinfeudspactor:any = await Joinfeud.find({ 'spectors.spectorUser': req.uId});

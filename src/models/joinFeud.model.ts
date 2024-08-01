@@ -24,11 +24,12 @@ const JoinFeudSchema = new Schema<IJoinFeuds>({
         disagree: [{ type: Schema.Types.ObjectId, ref: "User" }],
         muteAt: {type: Date, default: null},
         muteEnd: {type: Date, default: null},
+        status: {type: Number, default: 0} // 0 for normal, 1 for reported, 2 for new moderator
     },
-    removeModerator: [{
+    removeModerator: {
         removeModeratorUser: { type: Schema.Types.ObjectId, ref: "User" },
         removeAt: Date,
-    }]
+    },
 }, {
     versionKey: false
 });
