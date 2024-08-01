@@ -30,7 +30,7 @@ export class userService {
             phoneOTPtimestamp: Date.now(),
             isActive: true,
         });
-        let setting = await settings.create({
+        await settings.create({
           userId: user._id
         });
         return res.status(200).json({ message: "Your account has been created successfully!!!" });
@@ -411,7 +411,6 @@ export class userService {
 
   async usernameCheck(req: CustomRequest, res: Response) {
     const { username } = req.body;
-    const uId = req.uId;
     try {
       let user: any = await User.findOne({ username: username });
       if (user) {
@@ -422,7 +421,7 @@ export class userService {
       }
       return res.status(200).json({ status: true, message: "Username is available" });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return res.status(500).json({ status: false, message: "Internal server error!!" });
     }
   }

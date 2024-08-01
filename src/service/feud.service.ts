@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { CustomRequest } from "../interface/user.interface";
 import { ObjectId } from "mongodb";
 import User from "../models/user.model";
@@ -12,7 +12,6 @@ import { otpSEND } from "../helper/otpSend.helper";
 import { sendEMAIL } from "../helper/emailSend.helper";
 import moment from "moment";
 import dotenv from "dotenv";
-import { stat } from "fs";
 dotenv.config();
 
 export class feudService {
@@ -817,7 +816,6 @@ export class feudService {
 
   async getKickoutCount(req: CustomRequest, res: Response) {
     const { feudId, isCancel, isKickout, ModeratorId } = req.body;
-    let userId:any = req.uId;
     try {
       let feud: any = await Joinfeud.findOne({ 'participant.participantUser': req.uId, feudId: feudId });
       if (!feud) {

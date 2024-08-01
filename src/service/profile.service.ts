@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import User from "../models/user.model";
-import feuds from "../models/feuds.model";
 import Joinfeud from "../models/joinFeud.model";
 import { CustomRequest } from "../interface/user.interface";
 import dotenv from 'dotenv';
