@@ -7,7 +7,8 @@ import Notification from "../models/notification.model";
 import feuds from "../models/feuds.model";
 import settings from "../models/setting.model";
 import Joinfeud from "../models/joinFeud.model";
-import Report from "../models/report.model"
+import Report from "../models/report.model";
+import rank from "../models/moderatorRank.model"
 import { otpSEND } from "../helper/otpSend.helper";
 import { sendEMAIL } from "../helper/emailSend.helper";
 import moment from "moment";
@@ -364,7 +365,7 @@ export class feudService {
         
         await Joinfeud.updateOne(
           { feudId: notification.feudId, inviteModerator: req.uId },
-          { $set: { "moderator.moderatorUser": req.uId }, $pull: { inviteModerator: req.uId }}
+          { $set: { "moderator.moderatorUser": req.uId, status: 1 }, $pull: { inviteModerator: req.uId }}
         );
         
         return res.status(200).json({ status: true, message: "Notification accepted successfully!" });
@@ -572,11 +573,11 @@ export class feudService {
         await joinfeud.save();
 
         await Optionscount.deleteMany({ feudId: { $eq: feudId }});
-        for (let index = 0; index < editfeud.options.length; index++) {
+        for (const option of options) {
           await Optionscount.create({
             feudId: editfeud._id,
-            optionName: editfeud.options[index].option,
-            optionId: editfeud.options[index]._id,
+            optionName: option.option,
+            optionId: option._id,
           });
         }
 
@@ -803,7 +804,7 @@ export class feudService {
           feudId: feudId,
           isModerator: true
         });
-        feud.moderator.status = 1;
+        feud.moderator.status = 2;
         await feud.save();
       }
 
@@ -861,16 +862,16 @@ export class feudService {
           await Joinfeud.updateOne(
             {feudId:feudId, 'participant.participantUser': req.uId, 'participant.joinType': 3 ,'moderator.moderatorUser': ModeratorId},
             { $set : {
-              'moderator.status': 0,
+              'moderator.status': 1,
               'moderator.agree': [],
               'moderator.disagree': []
               }
             }
           )
-          return res.status(400).json({status: false, message:"Yes counts is less than to No counts!!"})
+          return res.status(200).json({status: false, message:"Cancel successfully!!"})
       }
     
-      return res.status(200).json({ status: true, message: "Get Kick out Vote count successfully!!", kickout });
+      return res.status(200).json({ status: true, message: "Kickout moderator successfully!!", kickout });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ status: false, message: "Internal server error." });
@@ -884,12 +885,6 @@ export class feudService {
       if (!feud) {
         return res.status(400).json({ status: false, message: "Participant does not exist!" });
       }
-  
-      let report = await Report.findOne({ feudId: feudId });
-      if (!report) {
-        return res.status(400).json({ status: false, message: "Report does not exist!" });
-      }
-  
       await Joinfeud.updateOne(
         { feudId: feudId },
         { $pull: { 'moderator.agree': req.uId, 'moderator.disagree': req.uId } }
@@ -917,18 +912,54 @@ export class feudService {
   }
 
   async endFeudResponse(req: CustomRequest, res: Response) {
-    const { feudId, rate } = req.body;
+    const { feudId, rankType } = req.body;
+    const currId:any = new ObjectId(`${req.uId}`)
     try {
-      let feud = await Joinfeud.findOne({ 'participant.participantUser': req.uId, feudId: feudId });
+      let feud:any = await Joinfeud.findOne({ feudId: feudId });
       if (!feud) {
         return res.status(400).json({ status: false, message: "Participant does not exist!" });
       }
-  
-      return res.status(200).json({ status: true, message: "Your rate is submitted successfully!"});
+
+      const participant = feud.participant.find((x: any) => x.participantUser.equals(currId));
+      const isSpectator = feud.spectors.some((x: any) => x.spectorUser.equals(currId));
+    
+      const joined = isSpectator ? 2 : participant?.joinType || null;
+      if (joined === null) {
+        return res.status(400).json({ status: false, message: "User not part of this feud." });
+      }
+      
+      let Rank:any = await rank.findOne({ feudId: feudId });
+
+      const findUser = Rank.rankData.some((x:any) => x.userId.equals(currId));
+      if(findUser === true){
+        return res.status(400).json({ status: false, message: "You already rank this moderator!!" });
+      }
+
+      if (!Rank) {
+        await rank.create({
+          feudId: feudId,
+          ModeratorId: feud.moderator.moderatorUser,
+          rankData: [{
+            userId: req.uId,
+            joinType: joined,
+            rankAt : Date.now(),
+            rank: rankType 
+          }]
+        });
+      } else {
+        Rank.rankData.push({
+          userId: req.uId,
+          joinType: joined,
+          rankAt : Date.now(),
+          rank: rankType 
+        })
+        await Rank.save();
+      } 
+
+      return res.status(200).json({ status: true, message: "Your Rank is submitted successfully!"});
     } catch (err) {
       console.error(err);
       return res.status(500).json({ status: false, message: "Internal server error." });
     }
   }
-  
 }
