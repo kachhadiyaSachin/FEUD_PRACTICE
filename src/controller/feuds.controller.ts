@@ -159,5 +159,41 @@ export class feudsExample extends feudService {
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
+
+  public async feudLikesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.feudLikes(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async getfeudLikesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.getfeudLikes(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async feudSavesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.feudSaves(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async getfeudSavesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.getfeudSaves(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
 }
 

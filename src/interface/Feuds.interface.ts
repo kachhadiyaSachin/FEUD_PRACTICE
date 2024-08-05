@@ -16,6 +16,7 @@ export interface IFeuds extends Document {
     feudLater: boolean,
     FeudDate: String,
     FeudTime: String,
+    endFeudTime: String,
     externalEmail: [
         String
     ],
@@ -28,6 +29,7 @@ export interface IFeuds extends Document {
     individual: [
         String
     ],
-    totalUser: Number,
-    status: Number
+    status: Number,
+    likeData: [ Types.ObjectId],
+    saveData: [ Types.ObjectId],
 }

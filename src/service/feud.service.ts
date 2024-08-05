@@ -962,4 +962,156 @@ export class feudService {
       return res.status(500).json({ status: false, message: "Internal server error." });
     }
   }
+
+  async feudLikes(req: CustomRequest, res: Response) {
+    const { feudId } = req.body;
+    const userId:any = new ObjectId(`${req.uId}`);
+    try {
+      let feud:any = await feuds.findOne({ _id: feudId });
+      if (!feud) {
+        return res.status(400).json({ status: false, message: "Feud does not exist!" });
+      }
+      let joinFeud:any = await Joinfeud.findOne({ feudId: feudId });
+      if (!joinFeud) {
+        return res.status(400).json({ status: false, message: "Participant does not exist!" });
+      }
+
+      const participant = joinFeud.participant.find((x: any) => x.participantUser.equals(userId));
+      const isSpectator = joinFeud.spectors.some((x: any) => x.spectorUser.equals(userId));
+
+      if(participant === undefined && isSpectator === false){
+        return res.status(400).json({ status: false, message: "You have to first join feud!!" });
+      }
+
+      const userLiked:any = feud.likeData.some((option: any) => option.equals(userId));
+      let updateQuery:any = {}
+      
+      if (userLiked === true) {
+        updateQuery = {$pull: {likeData : userId}}
+      } else {
+        updateQuery = { $addToSet: { likeData: userId }}
+      }
+      await feuds.findOneAndUpdate({ _id: feudId },updateQuery,{new: true});
+
+      return res.status(200).json({ status: true, message: "liked successfully!"});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, message: "Internal server error." });
+    }
+  }
+
+  async getfeudLikes(req: CustomRequest, res: Response) {
+    const { feudId } = req.body;
+    const userId:any = new ObjectId(`${req.uId}`);
+    try {
+      let feud:any = await feuds
+        .findOne({ _id: feudId })
+        .select("likeData")
+        .populate({
+          path: "likeData",
+          select: "first_name last_name profilepic badge",
+          model: "User",
+        })
+        .lean()
+        .exec();
+      if (!feud) {
+        return res.status(400).json({ status: false, message: "Feud does not exist!" });
+      }
+
+      let likes:any = feud.likeData.length;
+
+      let joinFeud:any = await Joinfeud.findOne({ feudId: feudId });
+      if (!joinFeud) {
+        return res.status(400).json({ status: false, message: "Participant does not exist!" });
+      }
+
+      const participant = joinFeud.participant.find((x: any) => x.participantUser.equals(userId));
+      const isSpectator = joinFeud.spectors.some((x: any) => x.spectorUser.equals(userId));
+
+      if(participant === undefined && isSpectator === false){
+        return res.status(400).json({ status: false, message: "You have to first join feud!!" });
+      }
+
+      return res.status(200).json({ status: true, message: "Get like Data successfully!",likesCount : likes,feud});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, message: "Internal server error." });
+    }
+  }
+
+  async feudSaves(req: CustomRequest, res: Response) {
+    const { feudId } = req.body;
+    const userId:any = new ObjectId(`${req.uId}`);
+    try {
+      let feud:any = await feuds.findOne({ _id: feudId });
+      if (!feud) {
+        return res.status(400).json({ status: false, message: "Feud does not exist!" });
+      }
+      let joinFeud:any = await Joinfeud.findOne({ feudId: feudId });
+      if (!joinFeud) {
+        return res.status(400).json({ status: false, message: "Participant does not exist!" });
+      }
+
+      const participant = joinFeud.participant.find((x: any) => x.participantUser.equals(userId));
+      const isSpectator = joinFeud.spectors.some((x: any) => x.spectorUser.equals(userId));
+
+      if(participant === undefined && isSpectator === false){
+        return res.status(400).json({ status: false, message: "You have to first join feud!!" });
+      }
+
+      const userLiked:any = feud.saveData.some((option: any) => option.equals(userId));
+      let updateQuery:any = {}
+      
+      if (userLiked === true) {
+        updateQuery = {$pull: {saveData : userId}}
+      } else {
+        updateQuery = { $addToSet: { saveData: userId }}
+      }
+      await feuds.findOneAndUpdate({ _id: feudId },updateQuery,{new: true});
+
+      return res.status(200).json({ status: true, message: "Saved successfully!"});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, message: "Internal server error." });
+    }
+  }
+
+  async getfeudSaves(req: CustomRequest, res: Response) {
+    const { feudId } = req.body;
+    const userId:any = new ObjectId(`${req.uId}`);
+    try {
+      let feud:any = await feuds
+        .findOne({ _id: feudId })
+        .select("saveData")
+        .populate({
+          path: "saveData",
+          select: "first_name last_name profilepic badge",
+          model: "User",
+        })
+        .lean()
+        .exec();
+      if (!feud) {
+        return res.status(400).json({ status: false, message: "Feud does not exist!" });
+      }
+
+      let saves:any = feud.saveData.length;
+
+      let joinFeud:any = await Joinfeud.findOne({ feudId: feudId });
+      if (!joinFeud) {
+        return res.status(400).json({ status: false, message: "Participant does not exist!" });
+      }
+
+      const participant = joinFeud.participant.find((x: any) => x.participantUser.equals(userId));
+      const isSpectator = joinFeud.spectors.some((x: any) => x.spectorUser.equals(userId));
+
+      if(participant === undefined && isSpectator === false){
+        return res.status(400).json({ status: false, message: "You have to first join feud!!" });
+      }
+
+      return res.status(200).json({ status: true, message: "Get like Data successfully!",SavesCount : saves,feud});
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ status: false, message: "Internal server error." });
+    }
+  }
 }

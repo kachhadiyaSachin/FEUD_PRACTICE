@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IFeuds } from "../interface/createFeuds.interface";
+import { IFeuds } from "../interface/Feuds.interface";
 
 const FeudsSchema = new Schema<IFeuds>({
     userId: { type: Schema.Types.ObjectId, ref: "User" },
@@ -16,6 +16,7 @@ const FeudsSchema = new Schema<IFeuds>({
     feudLater: {type: Boolean, default: false},
     FeudDate: {type: String, require: true},
     FeudTime: {type: String, require: true},
+    endFeudTime: {type: String},
     externalEmail: [
         {type: String}
     ],
@@ -26,8 +27,9 @@ const FeudsSchema = new Schema<IFeuds>({
         { type: Number, default: 0 }
     ],
     individual: [{type:String}],
-    totalUser: {type: Number, default:0},
-    status: {type: Number, default: 0, enum:[0,1,2,3]}
+    status: {type: Number, default: 0, enum:[0,1,2,3]}, // 0 for not start, 1 for started, 2 for end, 3 for expired
+    likeData: [{type: Schema.Types.ObjectId, ref: "User"}],
+    saveData: [{type: Schema.Types.ObjectId, ref: "User"}]
 }, {
     versionKey: false
 });

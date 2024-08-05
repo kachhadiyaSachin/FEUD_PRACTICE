@@ -1,6 +1,7 @@
 import { Response } from "express";
 import User from "../models/user.model";
 import Joinfeud from "../models/joinFeud.model";
+import feuds from "../models/feuds.model";
 import { CustomRequest } from "../interface/user.interface";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -15,9 +16,13 @@ export class profileService {
       if(user.badge <= 2){
         return res.status(400).json({ message: "You cannot get data upgrade your badge!!" });
       }
+      let feud:any = await feuds.find({});
       let joinfeudHost:any = await Joinfeud.find({ 'participant': { $elemMatch: { 'participantUser': req.uId, 'joinType': 3 } } });
       let joinfeudparticipant:any = await Joinfeud.find({ 'participant': { $elemMatch: { 'participantUser': req.uId, 'joinType': 1 } } });
       let joinfeudspactor:any = await Joinfeud.find({ 'spectors.spectorUser': req.uId});
+      
+      let totalLikes:any = feud.filter((x:any) => x.likeData.includes(req.uId));
+      let totalSaves:any = feud.filter((x:any) => x.saveData.includes(req.uId));
 
       let totalFeuds = joinfeudHost.length + joinfeudparticipant.length + joinfeudspactor.length;
 
@@ -31,7 +36,9 @@ export class profileService {
         participantCount: joinfeudparticipant.length,
         participantPercentage: Math.round(participantPercentage),
         spectorCount: joinfeudspactor.length,
-        spectorPercentage: Math.round(spectorPercentage)
+        spectorPercentage: Math.round(spectorPercentage),
+        totalLikes : totalLikes.length,
+        totalSaves : totalSaves.length,
       }
 
       return res.status(200).json({ status: true, message: "Data fetched successfully!!",data: joinFeudsdata});

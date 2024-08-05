@@ -37,5 +37,9 @@ export enum END_POINT {
     KICKOUTMODERATORRULE='/kickoutmoderatorrule',
     KICKOUTCOUNT='/kickoutcount',
     KICKOUTVOTE='/kickoutvote',
-    ENDFEUDRESPONSE='/endfeudresponse'
+    ENDFEUDRESPONSE='/endfeudresponse',
+    FEUDLIKES='/feudlike',
+    GETFEUDLIKES='/getfeudlike',
+    FEUDSAVES='/feudsave',
+    GETFEUDSAVES='/getfeudsave'
   }

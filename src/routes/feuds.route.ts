@@ -11,6 +11,12 @@ const { feudsExample } = controllers;
 router.post(END_POINT.CREATEFEUD, Verifytoken,feudsExample.feudsVerify);
 router.get(END_POINT.MYFEUDS, Verifytoken,feudsExample.getAllFeudsVerify);
 
+router.post(END_POINT.FEUDLIKES, Verifytoken, feudsExample.feudLikesVerify);
+router.get(END_POINT.GETFEUDLIKES, Verifytoken, feudsExample.getfeudLikesVerify);
+
+router.post(END_POINT.FEUDSAVES, Verifytoken, feudsExample.feudSavesVerify);
+router.get(END_POINT.GETFEUDSAVES, Verifytoken, feudsExample.getfeudSavesVerify);
+
 router.get(END_POINT.NOTIFICATION, Verifytoken, feudsExample.NotificationVerify);
 router.post(END_POINT.ACCEPTMODERATOR, Verifytoken, feudsExample.acceptModeratorRequestVerify);
 
@@ -30,5 +36,6 @@ router.post(END_POINT.KICKOUTMODERATORRULE, Verifytoken, feudsExample.kickOutMod
 router.get(END_POINT.KICKOUTCOUNT, Verifytoken, feudsExample.getKickoutCountVerify);
 router.post(END_POINT.KICKOUTVOTE, Verifytoken, feudsExample.addKickoutVoteVerify);
 router.post(END_POINT.ENDFEUDRESPONSE, Verifytoken, feudsExample.endFeudResponseVerify);
+
 
 export default router;
