@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import routes from "./Routes/index.route";
 import {validationErrorHandler} from "./Middleware/errorHandler";
+import { Analytics } from "@vercel/analytics/react"
 
 const startServer = async () => {
   await connectDB();
