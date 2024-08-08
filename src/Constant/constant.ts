@@ -41,5 +41,8 @@ export enum END_POINT {
     FEUDLIKES='/feudlike',
     GETFEUDLIKES='/getfeudlike',
     FEUDSAVES='/feudsave',
-    GETFEUDSAVES='/getfeudsave'
+    GETFEUDSAVES='/getfeudsave',
+    STARTFEUD='/startfeud',
+    LEAVEFEUD='/leavefeud',
+    ENDFEUD='/endfeud'
   }

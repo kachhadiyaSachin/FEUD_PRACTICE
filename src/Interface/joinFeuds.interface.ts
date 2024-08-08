@@ -10,11 +10,15 @@ export interface IJoinFeuds extends Document {
         joinType: Number,
         muteAt: Date,
         muteEnd: Date,
-        status: Number
+        status: Number,
+        JoinAt: Date
+        leaveAt: Date
     }],
     spectors: [{
         spectorUser: Schema.Types.ObjectId,
         isAlert: Boolean,
+        JoinAt: Date,
+        leaveAt: Date
     }],
     inviteModerator: [
         Schema.Types.ObjectId

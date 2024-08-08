@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import mongoose, { Schema } from 'mongoose';
-import { IUser } from '../interface/user.interface';
+import { IUser } from '../Interface/user.interface';
 
 const UserSchema: Schema = new Schema<IUser>({
     _id: { type: ObjectId, auto: true },

@@ -16,6 +16,7 @@ export interface IFeuds extends Document {
     feudLater: boolean,
     FeudDate: String,
     FeudTime: String,
+    endFeudDate: string,
     endFeudTime: String,
     externalEmail: [
         String

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { feudService } from "../service/feud.service";
+import { feudService } from "../Service/feud.service";
 
 export class feudsExample extends feudService {
   constructor() {
@@ -33,37 +33,9 @@ export class feudsExample extends feudService {
     }
   }
 
-
-  public async GetvoteCountVerify(req: Request, res: Response): Promise<void> {
-    try {
-      await super.getVotecount(req, res);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ status: 500, message: "Something went wrong" });
-    }
-  }
-
   public async acceptModeratorRequestVerify(req: Request, res: Response): Promise<void> {
     try {
       await super.acceptModeratorRequest(req, res);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ status: 500, message: "Something went wrong" });
-    }
-  }
-
-  public async voteCountVerify(req: Request, res: Response): Promise<void> {
-    try {
-      await super.Votecount(req, res);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ status: 500, message: "Something went wrong" });
-    }
-  }
-
-  public async joinFeudVerify(req: Request, res: Response): Promise<void> {
-    try {
-      await super.joinFeud(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
@@ -97,27 +69,63 @@ export class feudsExample extends feudService {
     }
   }
 
-  public async FeudsyouHostedVerify(req: Request, res: Response): Promise<void> {
+  public async joinFeudVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.FeudsyouHosted(req, res);
+      await super.joinFeud(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
 
-  public async rentBackskinVerify(req: Request, res: Response): Promise<void> {
+  public async GetvoteCountVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.rentBackskin(req, res);
+      await super.getVotecount(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
 
-  public async itemVisibilityVerify(req: Request, res: Response): Promise<void> {
+  public async voteCountVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.itemVisibility(req, res);
+      await super.Votecount(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async feudLikesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.feudLikes(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async getfeudLikesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.getfeudLikes(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async feudSavesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.feudSaves(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async getfeudSavesVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.getfeudSaves(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
@@ -160,36 +168,45 @@ export class feudsExample extends feudService {
     }
   }
 
-  public async feudLikesVerify(req: Request, res: Response): Promise<void> {
+  public async startFeudVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.feudLikes(req, res);
+      await super.startFeud(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
 
-  public async getfeudLikesVerify(req: Request, res: Response): Promise<void> {
+  public async leaveFeudVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.getfeudLikes(req, res);
+      await super.leaveFeud(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
 
-  public async feudSavesVerify(req: Request, res: Response): Promise<void> {
+  public async endFeudVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.feudSaves(req, res);
+      await super.endFeud(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
     }
   }
 
-  public async getfeudSavesVerify(req: Request, res: Response): Promise<void> {
+  public async rentBackskinVerify(req: Request, res: Response): Promise<void> {
     try {
-      await super.getfeudSaves(req, res);
+      await super.rentBackskin(req, res);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, message: "Something went wrong" });
+    }
+  }
+
+  public async itemVisibilityVerify(req: Request, res: Response): Promise<void> {
+    try {
+      await super.itemVisibility(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });

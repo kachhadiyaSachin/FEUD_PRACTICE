@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import User from "../models/user.model";
-import UserRequest from "../models/request.model";
-import settings from "../models/setting.model";
+import User from "../Models/user.model";
+import UserRequest from "../Models/request.model";
+import settings from "../Models/setting.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { otpSEND } from "../helper/otpSend.helper";
-import { sendEMAIL } from "../helper/emailSend.helper";
-import { CustomRequest } from "../interface/user.interface";
+import { otpSEND } from "../Helper/otpSend.helper";
+import { sendEMAIL } from "../Helper/emailSend.helper";
+import { CustomRequest } from "../Interface/user.interface";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -485,29 +485,6 @@ export class userService {
     } catch (err) {
       console.log(err);
       return res.status(500).json({ status: false, message: "Internal server error!!" });
-    }
-  }
-
-  async updateTicker(req: CustomRequest, res: Response) {
-    const {ticker, color, speed} = req.body
-    try {
-      let user:any = await User.findOne({_id: req.uId});
-      if(!user){
-        return res.status(400).json({status:false, message:"User is not exist!!"});
-      }
-      if(user.badge === 1){
-        return res.status(400).json({ message: "You cannot update ticker upgrade your badge!!" });
-      }
-
-      user.ticker.description = ticker;
-      user.ticker.textColor = color;
-      user.ticker.speed = speed;
-      await user.save();
-
-      return res.status(200).json({ status: true, message: "Ticker updated successfully!!"});
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ status: false, message: "Internal server error." });
     }
   }
 }

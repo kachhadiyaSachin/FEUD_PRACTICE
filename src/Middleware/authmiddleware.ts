@@ -1,5 +1,5 @@
 import { Response, NextFunction } from 'express';
-import { CustomRequest } from '../interface/user.interface';
+import { CustomRequest } from '../Interface/user.interface';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { ObjectId } from 'mongodb';

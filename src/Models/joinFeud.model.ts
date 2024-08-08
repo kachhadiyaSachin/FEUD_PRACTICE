@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IJoinFeuds } from "../interface/joinFeuds.interface";
+import { IJoinFeuds } from "../Interface/joinFeuds.interface";
 
 const JoinFeudSchema = new Schema<IJoinFeuds>({
     feudId: { type: Schema.Types.ObjectId, ref: "Feuds" },
@@ -10,10 +10,14 @@ const JoinFeudSchema = new Schema<IJoinFeuds>({
         muteAt: {type: Date, default: null},
         muteEnd: {type: Date, default: null},
         status: { type: Number, default: 0, enum:[0,1,2,3]}, // 0 for inactive, 1 for active, 2 for remove, 3 for block
+        JoinAt: { type: Date },
+        leaveAt: { type: Date, default: null }
     }],
     spectors: [{
         spectorUser: { type: Schema.Types.ObjectId, ref: "User" },
-        isAlert: Boolean
+        isAlert: Boolean,
+        JoinAt: { type: Date },
+        leaveAt: { type: Date, default: null }
     }],
     inviteModerator: [{ type: Schema.Types.ObjectId, ref: "User", default: [] }],
     moderator: {

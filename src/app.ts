@@ -1,9 +1,9 @@
-import express from "express";
-import {connectDB, dbSignals} from '../src/db/db';
+import express, { Request, Response, NextFunction } from "express";
+import {connectDB, dbSignals} from './DB/db';
 import dotenv from "dotenv";
 import cors from "cors";
-import routes from "../src/routes/index.route";
-import ValidationErrorHandler from "../src/middleware/errorHandler";
+import routes from "./Routes/index.route";
+import {validationErrorHandler} from "./Middleware/errorHandler";
 
 const startServer = async () => {
   await connectDB();
@@ -17,10 +17,16 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
-app.use(ValidationErrorHandler);
-
 routes(app);
+
+app.use(validationErrorHandler);
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  res.status(err.status || 500).json({
+      message: err.message,
+      error: err
+  });
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userService } from "../service/user.service";
+import { userService } from "../Service/user.service";
 
 export class userExample extends userService {
   constructor() {
@@ -137,15 +137,6 @@ export class userExample extends userService {
   public async getuserPROFILE(req: Request, res: Response): Promise<void> {
     try {
       await super.getuserProfile(req, res);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ status: 500, message: "Something went wrong" });
-    }
-  }
-
-  public async updateTickerVerify(req: Request, res: Response): Promise<void> {
-    try {
-      await super.updateTicker(req, res);
     } catch (err) {
       console.log(err);
       res.status(500).json({ status: 500, message: "Something went wrong" });
